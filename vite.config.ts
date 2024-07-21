@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/very-strong-viz/',
+  base: '/Very-strong-viz/',
   assetsInclude: ['**/*.csv'],
   plugins: [
     vue(),
