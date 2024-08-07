@@ -1,7 +1,7 @@
-import './assets/main.css'
-import 'balm-ui-css'
+import './assets/main.css';
+import 'balm-ui-css';
 
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 import BalmUIPlus from 'balm-ui-plus';
 import BalmUI, { useTheme } from 'balm-ui';
 

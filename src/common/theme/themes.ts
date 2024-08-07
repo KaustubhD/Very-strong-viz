@@ -1,4 +1,4 @@
-import type { ThemeColor } from "balm-ui/dist/typings/plugins";
+import type { ThemeColor } from 'balm-ui/dist/typings/plugins';
 
 export const darkTheme: ThemeColor = {
   primary: '#BB86FC',
@@ -9,5 +9,5 @@ export const darkTheme: ThemeColor = {
   'on-primary': '#000000',
   'on-secondary': '#000000',
   'on-surface': '#FFFFFF',
-  'on-error': '#000000',
+  'on-error': '#000000'
 };

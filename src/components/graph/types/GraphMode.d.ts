@@ -1,3 +1,3 @@
-import type { graphModes } from '../GraphModes'
+import type { graphModes } from '../GraphModes';
 
-export type GraphMode = (typeof graphModes)[number]
+export type GraphMode = (typeof graphModes)[number];

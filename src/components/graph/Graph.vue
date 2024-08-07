@@ -9,33 +9,33 @@ import {
   Tooltip,
   Legend,
   type ChartData
-} from 'chart.js'
-import _ from 'lodash'
-import { Line } from 'vue-chartjs'
-import { options } from './ChartOptions'
-import type { Log } from '../Strong/types/Log'
-import { graphModes } from './GraphModes'
-import { computed, ref, type Ref, type ComputedRef } from 'vue'
+} from 'chart.js';
+import _ from 'lodash';
+import { Line } from 'vue-chartjs';
+import { options } from './ChartOptions';
+import type { Log } from '../Strong/types/Log';
+import { graphModes } from './GraphModes';
+import { computed, ref, type Ref, type ComputedRef } from 'vue';
 
 const props = defineProps<{
-  data: Log[]
-  exerciseName: string
-}>()
+  data: Log[];
+  exerciseName: string;
+}>();
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const graphMode: Ref<string> = ref('volume');
 const propName: ComputedRef<string> = computed(() => {
   switch (graphMode.value) {
     case 'volume':
     default: {
-      return 'volume'
+      return 'volume';
     }
     case 'maxVolumeInOneSet': {
-      return 'maxSetVolume'
+      return 'maxSetVolume';
     }
   }
-})
+});
 const aggregated = computed(() =>
   _.chain(props.data)
     .groupBy('date')
@@ -44,21 +44,21 @@ const aggregated = computed(() =>
         _.reduce(
           x,
           (acc: Log | undefined, xx: Log) => {
-            const setVolume = (xx.weight || 0) * (xx.reps || 0)
+            const setVolume = (xx.weight || 0) * (xx.reps || 0);
             if (!acc) {
-              return { ...xx, volume: setVolume, maxSetVolume: setVolume }
+              return { ...xx, volume: setVolume, maxSetVolume: setVolume };
             } else {
-              const setVolume = (xx.weight || 0) * (xx.reps || 0)
-              acc.volume += setVolume
-              acc.maxSetVolume = Math.max(acc.maxSetVolume, setVolume)
-              return acc
+              const setVolume = (xx.weight || 0) * (xx.reps || 0);
+              acc.volume += setVolume;
+              acc.maxSetVolume = Math.max(acc.maxSetVolume, setVolume);
+              return acc;
             }
           },
           undefined
         ) as Log
     )
     .value()
-)
+);
 
 const graphData: ComputedRef<ChartData<'line'>> = computed(() => ({
   labels: _.map(aggregated.value, (log: Log) => new Date(log.date).toDateString().slice(4)),
@@ -74,7 +74,7 @@ const graphData: ComputedRef<ChartData<'line'>> = computed(() => ({
       data: _.map(aggregated.value, propName.value)
     }
   ]
-}))
+}));
 </script>
 
 <template>
