@@ -15,7 +15,6 @@ import { Line } from 'vue-chartjs'
 import { options } from './ChartOptions'
 import type { Log } from '../Strong/types/Log'
 import { graphModes } from './GraphModes'
-import type { GraphMode } from './types/GraphMode'
 import { computed, ref, type Ref, type ComputedRef } from 'vue'
 
 const props = defineProps<{
@@ -25,7 +24,7 @@ const props = defineProps<{
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
-const graphMode: Ref<GraphMode> = ref('volume')
+const graphMode: Ref<string> = ref('volume');
 const propName: ComputedRef<string> = computed(() => {
   switch (graphMode.value) {
     case 'volume':
@@ -79,11 +78,9 @@ const graphData: ComputedRef<ChartData<'line'>> = computed(() => ({
 </script>
 
 <template>
-  <select v-model="graphMode">
-    <option v-for="option in graphModes" :key="option" :value="option">
-      {{ option }}
-    </option>
-  </select>
+  <ui-select id="graphMode" v-model="graphMode" :options="graphModes">
+    Select graph type
+  </ui-select>
   <div class="graph-container">
     <Line :data="graphData" :options="options" />
   </div>

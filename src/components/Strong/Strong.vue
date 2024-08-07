@@ -24,6 +24,7 @@ const exerciseNames = computed(() =>
     .map((row: Log) => row.exerciseName)
     .uniq()
     .sort()
+    .map((exercise: string) => ({ label: exercise, value: exercise }))
     .value()
 )
 const selectedExerciseName = ref('Deadlift (Barbell)')
@@ -33,22 +34,18 @@ const exerciseData = computed(() =>
 </script>
 
 <template>
-  <div class="section">
-    <h2>Exercise graph</h2>
-    <label for="exerciseName">
-      Select your exercise:
-      <select id="exerciseName" v-model="selectedExerciseName">
-        <option v-for="option in exerciseNames" :key="option" :value="option">
-          {{ option }}
-        </option>
-      </select>
-    </label>
+    <h4 :class="[$tt('headline4'), $theme.getTextClassOnDark('primary')]">Exercise graph</h4>
+    <ui-select id="exerciseName" v-model="selectedExerciseName" :options="exerciseNames">
+      Select your exercise
+    </ui-select>
     <Graph :data="exerciseData" :exercise-name="selectedExerciseName"></Graph>
-  </div>
 </template>
 
 <style scoped>
 .section {
   padding: 10px;
+}
+h4 {
+  margin: 10px 0;
 }
 </style>
