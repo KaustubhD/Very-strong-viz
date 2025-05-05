@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { useElementSize } from '@vueuse/core';
 import { ref, type Ref, watch } from 'vue';
+import { useElementSize } from '@vueuse/core';
 import Strong from '@/components/Strong/Strong.vue';
 import { sampleFileUrl } from '@/common/constants/GlobalConstants';
 
-const header = ref(null);
-const body = ref(null);
+const header: Ref<any | null> = ref(null);
+const body: Ref<HTMLBodyElement | null> = ref(null);
 const file: Ref<File | null> = ref(null);
 
-let height: { value: any };
-watch(header, () => {
-  height = useElementSize(header.value.$refs.topAppBar).height;
-  body.value.style.paddingTop = height.value + 10 + 'px';
+watch(header, (val: any | null) => {
+  const height = useElementSize(val!.$refs.topAppBar).height;
+  body.value!.style.paddingTop = height.value + 10 + 'px';
 });
 
 // TODO: add type
-function handleUpload(files) {
+function handleUpload(files: { sourceFile: File }[]) {
   file.value = files[0].sourceFile;
 }
 
@@ -43,7 +42,7 @@ function handleSampleUpload() {
       <label for="sampleInput" :class="$theme.getTextClassOnDark('primary')"
         >Or click on this button to upload a sample file</label
       >
-      <ui-button type="text" raised="true" @click="handleSampleUpload"
+      <ui-button type="text" raised=true @click="handleSampleUpload"
         >Upload sample file</ui-button
       >
     </div>

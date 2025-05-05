@@ -38,6 +38,6 @@ npm run lint
 1. Factor in drop sets in volume calculation
 
     The app doesn't export it so cannot do anything about it just yet.
-2. Add a template file for someone who wants to browse.
+2. ~~Add a template file for someone who wants to browse.~~
 3. Use a nav option or a tab for 2.
 4. Light and dark theme. 
