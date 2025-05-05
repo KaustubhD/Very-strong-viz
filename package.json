@@ -9,12 +9,13 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint": "eslint src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
   "dependencies": {
     "@types/papaparse": "^5.3.14",
     "@vueuse/core": "^10.11.0",
+    "axios": "^1.9.0",
     "balm-ui": "^10.29.0",
     "chart.js": "^4.4.3",
     "lodash": "^4.17.21",

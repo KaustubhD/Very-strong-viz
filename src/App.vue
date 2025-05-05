@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { ref, type Ref, onMounted, watch } from 'vue';
-import Strong from '@/components/Strong/Strong.vue';
+import axios from 'axios';
 import { useElementSize } from '@vueuse/core';
+import { ref, type Ref, watch } from 'vue';
+import Strong from '@/components/Strong/Strong.vue';
+import { sampleFileUrl } from '@/common/constants/GlobalConstants';
 
-onMounted(function () {
-  // TODO: Need a type for header.value
-});
 const header = ref(null);
 const body = ref(null);
+const file: Ref<File | null> = ref(null);
 
 let height: { value: any };
-// console.log(header.value.$refs.topAppBar);
 watch(header, () => {
   height = useElementSize(header.value.$refs.topAppBar).height;
-  console.log(height.value);
-  console.log(body.value);
   body.value.style.paddingTop = height.value + 10 + 'px';
 });
 
@@ -23,7 +20,14 @@ function handleUpload(files) {
   file.value = files[0].sourceFile;
 }
 
-const file: Ref<File | null> = ref(null);
+function handleSampleUpload() {
+  axios(sampleFileUrl, { responseType: 'blob' }).then((res) => {
+    const sampleFile = new File([res.data], 'strong4932826597537696438.csv', {
+      type: 'text/plain '
+    });
+    file.value = sampleFile;
+  });
+}
 </script>
 
 <template>
@@ -36,6 +40,12 @@ const file: Ref<File | null> = ref(null);
         >Upload the exported csv file from the Strong app</label
       >
       <ui-file inputId="fileInput" accept="text/csv" @change="handleUpload"></ui-file>
+      <label for="sampleInput" :class="$theme.getTextClassOnDark('primary')"
+        >Or click on this button to upload a sample file</label
+      >
+      <ui-button type="text" raised="true" @click="handleSampleUpload"
+        >Upload sample file</ui-button
+      >
     </div>
     <div class="section">
       <Strong :file="file" v-if="file"></Strong>

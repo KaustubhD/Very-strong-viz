@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import _ from 'lodash';
+import type { ParseResult } from 'papaparse';
 import { computed, ref, watch, type Ref } from 'vue';
 import { parseAndCleanData } from '@/common/utils/CsvUtils';
+import { defaultSelectedExercise } from '@/common/constants/GlobalConstants';
 import Graph from '../graph/Graph.vue';
 import type { Log } from './types/Log';
-import type { ParseResult } from 'papaparse';
 
 const props = defineProps<{
   file: File;
@@ -27,7 +28,7 @@ const exerciseNames = computed(() =>
     .map((exercise: string) => ({ label: exercise, value: exercise }))
     .value()
 );
-const selectedExerciseName = ref('Deadlift (Barbell)');
+const selectedExerciseName = ref(defaultSelectedExercise);
 const exerciseData = computed(() =>
   _.filter(parsedCsv.value?.data, (log: Log) => log.exerciseName == selectedExerciseName.value)
 );
